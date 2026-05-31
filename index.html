@@ -3,21 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jackson Plumbing Plan AI</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Jackson Plumbing Plan AI auto-generates permit-ready plumbing schematics for licensed contractors in Mississippi.">
+  <meta name="theme-color" content="#0a1628">
+  <title>Jackson Plumbing Plan AI | Permit-Ready Plans in Minutes</title>
   <style>
     :root {
-      --navy: #0a1628;
-      --navy-light: #112240;
-      --navy-mid: #1a3a6b;
+      --bg: #0a1628;
+      --bg-soft: #0e1d34;
+      --panel: rgba(11, 26, 48, 0.9);
+      --panel-soft: rgba(16, 34, 59, 0.82);
+      --line: rgba(89, 157, 249, 0.18);
+      --line-strong: rgba(89, 157, 249, 0.4);
+      --text: #edf5ff;
+      --muted: #9db4d2;
       --accent: #4f9cf9;
-      --accent-hover: #2d7dd2;
-      --white: #ffffff;
-      --gray-light: #f0f4ff;
-      --gray-text: #8892a4;
-      --text: #ccd6f6;
+      --accent-strong: #2d7de3;
+      --accent-soft: rgba(79, 156, 249, 0.14);
+      --success: #8fd3ff;
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+      --container: min(1180px, calc(100% - 2rem));
+      --font: Inter, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     }
 
     * {
@@ -30,94 +38,166 @@
 
     body {
       margin: 0;
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--navy);
+      font-family: var(--font);
       color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(79, 156, 249, 0.16), transparent 22%),
+        radial-gradient(circle at 82% 20%, rgba(79, 156, 249, 0.12), transparent 22%),
+        linear-gradient(180deg, #07111f 0%, #0a1628 52%, #0d1b31 100%);
       line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.9;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.92), transparent 94%);
+    }
+
+    body::after {
+      background:
+        linear-gradient(90deg, transparent 0 20%, rgba(79, 156, 249, 0.04) 20% 20.4%, transparent 20.4% 100%),
+        linear-gradient(180deg, transparent 0 58%, rgba(79, 156, 249, 0.04) 58% 58.4%, transparent 58.4% 100%);
+      opacity: 0.7;
     }
 
     a {
-      color: var(--accent);
+      color: inherit;
       text-decoration: none;
     }
 
-    a:hover {
-      color: var(--accent-hover);
+    button,
+    input {
+      font: inherit;
     }
 
     .container {
-      width: min(1120px, calc(100% - 2rem));
+      width: var(--container);
       margin: 0 auto;
     }
 
     .site-header {
-      position: fixed;
+      position: sticky;
       top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(10, 22, 40, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(79, 156, 249, 0.12);
       z-index: 1000;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 19, 35, 0.82);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .navbar {
+    .nav-wrap {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 76px;
       gap: 1rem;
+      min-height: 78px;
     }
 
-    .logo {
-      color: var(--white);
-      font-size: 1.1rem;
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.95rem;
       font-weight: 700;
       letter-spacing: 0.02em;
     }
 
-    .nav-toggle {
-      display: none;
-      align-items: center;
-      justify-content: center;
+    .brand-mark {
       width: 44px;
       height: 44px;
-      border: 1px solid rgba(79, 156, 249, 0.25);
-      border-radius: 8px;
-      background: transparent;
-      color: var(--white);
-      font-size: 1.4rem;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background:
+        linear-gradient(145deg, rgba(79, 156, 249, 0.2), rgba(79, 156, 249, 0.04)),
+        rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(79, 156, 249, 0.28);
+      box-shadow: 0 0 26px rgba(79, 156, 249, 0.18);
+      font-size: 0.86rem;
+    }
+
+    .nav-toggle {
+      display: none;
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
       cursor: pointer;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      margin: 4px auto;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.4rem;
       list-style: none;
       margin: 0;
       padding: 0;
     }
 
     .nav-links a {
-      color: var(--text);
+      color: var(--muted);
       font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
     }
 
-    .nav-links a:hover {
-      color: var(--accent);
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--text);
     }
 
-    main {
-      padding-top: 76px;
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(79, 156, 249, 0.26);
+      background: rgba(79, 156, 249, 0.12);
+      color: var(--text);
     }
 
     .hero {
       position: relative;
-      min-height: 90vh;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
+      padding: 7.2rem 0 4rem;
+      overflow: clip;
     }
 
     .hero::before {
@@ -125,392 +205,886 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at top left, rgba(79, 156, 249, 0.18), transparent 32%),
-        radial-gradient(circle at bottom right, rgba(26, 58, 107, 0.58), transparent 36%),
-        radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(180deg, rgba(17, 34, 64, 0.4), rgba(10, 22, 40, 0.96));
-      background-size: auto, auto, 24px 24px, 32px 32px, 32px 32px, auto;
+        radial-gradient(circle at 70% 15%, rgba(79, 156, 249, 0.22), transparent 20%),
+        radial-gradient(circle at 15% 65%, rgba(79, 156, 249, 0.12), transparent 18%);
+      animation: pulseField 14s ease-in-out infinite alternate;
+      pointer-events: none;
     }
 
-    .hero-content {
+    .hero-grid {
       position: relative;
-      max-width: 900px;
-      text-align: center;
-      padding: 5rem 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: 1.6rem;
+      align-items: center;
     }
 
-    .hero h1 {
-      margin: 0 0 1rem;
-      color: var(--white);
-      font-size: clamp(2rem, 5vw, 4rem);
-      line-height: 1.1;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 0.95rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(79, 156, 249, 0.2);
+      color: #c9ddfb;
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
-    .hero .tagline {
-      margin: 0 0 1rem;
-      color: var(--white);
-      font-size: clamp(1.15rem, 2.5vw, 1.5rem);
-      font-weight: 600;
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(79, 156, 249, 0.9);
     }
 
-    .hero p {
-      margin: 0 auto 2rem;
-      max-width: 760px;
-      color: var(--gray-light);
+    .hero-copy h1 {
+      margin: 1rem 0 0.8rem;
+      font-size: clamp(3rem, 7vw, 5.6rem);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+      max-width: 10ch;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      max-width: 58ch;
+      color: var(--muted);
       font-size: 1.05rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
     }
 
     .button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      padding: 14px 28px;
-      border: none;
-      border-radius: 8px;
-      background: var(--accent);
-      color: var(--white);
-      font: inherit;
-      font-weight: 600;
+      min-height: 52px;
+      padding: 0 1.35rem;
+      border-radius: 14px;
+      border: 1px solid transparent;
       cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    .button:hover {
-      background: var(--accent-hover);
-      color: var(--white);
-      transform: translateY(-1px);
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, #58a7ff 0%, #317ae0 100%);
+      color: #f7fbff;
+      box-shadow: 0 16px 34px rgba(49, 122, 224, 0.34);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+    }
+
+    .hero-note {
+      margin-top: 1rem;
+      color: #c6dcf8;
+      font-size: 0.92rem;
+    }
+
+    .hero-panel {
+      position: relative;
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 24%),
+        var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: calc(var(--radius-lg) - 1px);
+      background:
+        linear-gradient(180deg, rgba(79, 156, 249, 0.12), transparent 26%),
+        radial-gradient(circle at top right, rgba(79, 156, 249, 0.18), transparent 28%);
+      pointer-events: none;
+    }
+
+    .panel-header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .panel-header strong {
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #c6dbff;
+    }
+
+    .panel-state {
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(79, 156, 249, 0.14);
+      color: #d9e9ff;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .plan-window {
+      position: relative;
+      padding: 1.2rem;
+      border-radius: 20px;
+      background: rgba(7, 18, 33, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      color: #d9ebff;
+    }
+
+    .plan-grid {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .plan-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 0.9rem;
+      align-items: start;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+
+    .plan-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .plan-label {
+      color: #7baef8;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .plan-value {
+      color: #eff6ff;
+      font-size: 0.92rem;
+    }
+
+    .stats-bar {
+      padding: 0 0 5.2rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .stat-card {
+      padding: 1.3rem 1.2rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-card strong {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 1.4rem;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-size: 0.92rem;
     }
 
     .section {
-      padding: 5rem 0;
+      padding: 5.5rem 0;
     }
 
-    .section-title {
-      margin: 0 0 0.75rem;
-      color: var(--white);
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
+    .section-head {
+      display: grid;
+      gap: 0.85rem;
+      margin-bottom: 2.3rem;
+      max-width: 760px;
     }
 
-    .section-intro {
-      margin: 0 0 2rem;
-      max-width: 720px;
-      color: var(--gray-light);
+    .section-head.center {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
     }
 
-    .steps {
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+
+    .feature-card {
+      position: relative;
+      padding: 1.6rem;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(79, 156, 249, 0.08), transparent 20%),
+        var(--panel-soft);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .feature-card:hover,
+    .feature-card:focus-within {
+      transform: translateY(-5px);
+      border-color: var(--line-strong);
+      box-shadow: 0 24px 52px rgba(0, 0, 0, 0.28), 0 0 30px rgba(79, 156, 249, 0.14);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(79, 156, 249, 0.12);
+      border: 1px solid rgba(79, 156, 249, 0.2);
+      color: #d7e7ff;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 0.55rem;
+      font-size: 1.35rem;
+    }
+
+    .feature-card p {
+      margin: 0 0 1rem;
+      color: var(--muted);
+    }
+
+    .feature-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+      color: #d7e5fb;
+      font-size: 0.92rem;
+    }
+
+    .feature-card li {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .feature-card li::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      margin-top: 0.5rem;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(79, 156, 249, 0.8);
+    }
+
+    .workflow {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      gap: 1.2rem;
+      position: relative;
+    }
+
+    .workflow::before {
+      content: "";
+      position: absolute;
+      top: 34px;
+      left: 17%;
+      right: 17%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(79, 156, 249, 0.1), rgba(79, 156, 249, 0.5), rgba(79, 156, 249, 0.1));
+      z-index: 0;
     }
 
     .step {
-      padding: 1.75rem;
-      background: rgba(17, 34, 64, 0.65);
-      border: 1px solid rgba(79, 156, 249, 0.18);
-      border-radius: 12px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
+      position: relative;
+      z-index: 1;
+      padding: 1.4rem;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
     }
 
     .step-number {
+      width: 68px;
+      height: 68px;
       display: grid;
       place-items: center;
-      width: 48px;
-      height: 48px;
       margin-bottom: 1rem;
-      border-radius: 50%;
-      background: var(--accent);
-      color: var(--white);
+      border-radius: 20px;
+      background: linear-gradient(145deg, rgba(79, 156, 249, 0.22), rgba(79, 156, 249, 0.06));
+      border: 1px solid rgba(79, 156, 249, 0.28);
+      font-size: 1.25rem;
       font-weight: 700;
+      color: #edf5ff;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 24px rgba(79, 156, 249, 0.15);
     }
 
     .step h3 {
-      margin: 0 0 0.75rem;
-      color: var(--white);
-      font-size: 1.2rem;
+      margin: 0 0 0.55rem;
+      font-size: 1.26rem;
     }
 
     .step p {
       margin: 0;
-      color: var(--gray-light);
+      color: var(--muted);
     }
 
-    .callout {
-      padding: 2rem;
-      background: rgba(79, 156, 249, 0.08);
-      border-left: 4px solid var(--accent);
-      border-radius: 8px;
-      color: var(--gray-light);
+    .use-case-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.82fr);
+      gap: 1.4rem;
+      align-items: stretch;
     }
 
-    .callout p {
+    .use-case-copy,
+    .use-case-box {
+      padding: 1.7rem;
+      border-radius: 24px;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 54px rgba(0, 0, 0, 0.24);
+    }
+
+    .use-case-copy p {
       margin: 0 0 1rem;
+      color: var(--muted);
     }
 
-    .callout ul {
-      margin: 0;
-      padding-left: 1.2rem;
+    .use-case-copy p:last-child {
+      margin-bottom: 0;
     }
 
-    .callout li + li {
-      margin-top: 0.5rem;
-    }
-
-    .demo-card {
-      max-width: 760px;
-      padding: 2rem;
-      background: var(--navy-light);
-      border: 1px solid var(--navy-mid);
-      border-radius: 16px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
-    }
-
-    form {
+    .use-case-box {
       display: grid;
       gap: 1rem;
+      background:
+        radial-gradient(circle at top right, rgba(79, 156, 249, 0.18), transparent 32%),
+        rgba(12, 28, 50, 0.92);
     }
 
-    label {
+    .check-row {
+      padding: 1rem 1rem 1rem 1.05rem;
+      border-left: 3px solid rgba(79, 156, 249, 0.54);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .check-row strong {
       display: block;
-      margin-bottom: 0.45rem;
-      color: var(--white);
-      font-weight: 600;
+      margin-bottom: 0.25rem;
+      font-size: 0.98rem;
     }
 
-    input,
-    textarea {
+    .check-row span {
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .cta-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+      gap: 1.4rem;
+      padding: 1.9rem;
+      border-radius: 28px;
+      background:
+        linear-gradient(130deg, rgba(79, 156, 249, 0.16), rgba(79, 156, 249, 0.04) 36%, rgba(9, 22, 39, 0.98) 100%);
+      border: 1px solid rgba(79, 156, 249, 0.24);
+      box-shadow: var(--shadow);
+      align-items: center;
+    }
+
+    .cta-panel h2 {
+      margin: 0 0 0.7rem;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      line-height: 1.03;
+      letter-spacing: -0.04em;
+    }
+
+    .cta-panel p {
+      margin: 0;
+      color: #d0e2fa;
+    }
+
+    .cta-form {
+      display: grid;
+      gap: 0.85rem;
+      padding: 1.2rem;
+      border-radius: 22px;
+      background: rgba(8, 20, 38, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .cta-form label {
+      font-size: 0.9rem;
+      color: #d3e3fb;
+    }
+
+    .cta-form input {
       width: 100%;
-      padding: 12px;
-      border: 1px solid var(--navy-mid);
-      border-radius: 6px;
-      background: var(--navy-light);
-      color: var(--white);
-      font: inherit;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: var(--gray-text);
-    }
-
-    input:focus,
-    textarea:focus {
+      min-height: 50px;
+      padding: 0 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
       outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(79, 156, 249, 0.12);
     }
 
-    textarea {
-      min-height: 140px;
-      resize: vertical;
+    .cta-form input:focus {
+      border-color: rgba(79, 156, 249, 0.44);
+      box-shadow: 0 0 0 4px rgba(79, 156, 249, 0.12);
     }
 
-    .submit-button {
-      width: 100%;
-    }
-
-    .success-message {
-      display: none;
-      margin-top: 1.5rem;
-      padding: 1rem 1.25rem;
-      border: 1px solid rgba(46, 160, 67, 0.4);
-      border-radius: 10px;
-      background: rgba(46, 160, 67, 0.15);
-      color: #d5ffe1;
-      font-weight: 600;
-    }
-
-    .success-message.show {
-      display: block;
+    .cta-disclaimer {
+      color: var(--muted);
+      font-size: 0.84rem;
     }
 
     .footer {
-      background: #060e1a;
-      border-top: 1px solid rgba(79, 156, 249, 0.12);
-      padding: 2rem 0;
-      text-align: center;
+      padding: 1.6rem 0 2.4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
     }
 
-    .footer p {
-      margin: 0.35rem 0;
-      color: var(--gray-light);
+    .footer-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
 
-    .footer small {
-      display: block;
-      color: var(--gray-text);
-      line-height: 1.6;
+    .footer a {
+      color: #d6e6ff;
     }
 
-    @media (max-width: 820px) {
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes pulseField {
+      from {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      to {
+        transform: translate3d(0, -2%, 0) scale(1.05);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .use-case-panel,
+      .cta-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-grid,
+      .stats-grid,
+      .workflow {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .workflow::before {
+        display: none;
+      }
+    }
+
+    @media (max-width: 760px) {
       .nav-toggle {
-        display: inline-flex;
+        display: inline-block;
       }
 
       .nav-links {
         position: absolute;
-        top: 76px;
-        left: 0;
-        right: 0;
+        top: calc(100% + 0.8rem);
+        left: 1rem;
+        right: 1rem;
+        padding: 1rem;
+        border-radius: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(8, 21, 39, 0.97);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.36);
         display: none;
         flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-        padding: 1rem;
-        background: rgba(10, 22, 40, 0.98);
-        border-bottom: 1px solid rgba(79, 156, 249, 0.12);
+        align-items: stretch;
       }
 
-      .nav-links.open {
+      .nav-links.is-open {
         display: flex;
       }
 
       .hero {
-        min-height: auto;
+        padding-top: 6.4rem;
       }
 
-      .hero-content {
-        padding: 4rem 0;
-      }
-
-      .section {
-        padding: 4rem 0;
-      }
-
-      .steps {
+      .feature-grid,
+      .stats-grid,
+      .workflow {
         grid-template-columns: 1fr;
       }
 
-      .demo-card {
-        padding: 1.5rem;
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      [data-reveal] {
+        opacity: 1;
+        transform: none;
       }
     }
   </style>
 </head>
 <body>
   <header class="site-header">
-    <div class="container navbar">
-      <a class="logo" href="./index.html">Jackson Plumbing Plan AI</a>
-      <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">☰</button>
-      <ul class="nav-links" id="site-nav">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="./privacy.html">Privacy</a></li>
-        <li><a href="#demo-form">Request Demo</a></li>
-      </ul>
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="Jackson Plumbing Plan AI home">
+        <span class="brand-mark">JP</span>
+        <span>Jackson Plumbing Plan AI</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav aria-label="Primary">
+        <ul class="nav-links" id="site-nav">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#workflow">How It Works</a></li>
+          <li><a href="#use-case">Use Case</a></li>
+          <li><a class="nav-pill" href="#join-beta">Join the Beta</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero" id="top">
-      <div class="container hero-content">
-        <h1>Jackson Plumbing Plan AI</h1>
-        <p class="tagline">Upload a floor plan. Get a full permit package.</p>
-        <p>Our AI analyzes your architectural floor plans and delivers a complete plumbing permit package — annotated drawings, fixture unit schedules, and pipe routing schematics — directly to your inbox.</p>
-        <a class="button" href="#demo-form">Request a Demo →</a>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy" data-reveal>
+          <span class="eyebrow">Mississippi Permit Automation</span>
+          <h1>Permit-Ready Plans in Minutes</h1>
+          <p>
+            Jackson Plumbing Plan AI turns blueprint inputs into permit-ready plumbing schematics, code review outputs, and submission packages for licensed plumbing contractors.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#join-beta">Request a Demo</a>
+            <a class="button button-secondary" href="#features">Explore Features</a>
+          </div>
+          <div class="hero-note">Designed for fast contractor turnaround, predictable compliance review, and Jackson, Mississippi submission workflows.</div>
+        </div>
+
+        <aside class="hero-panel" data-reveal>
+          <div class="panel-header">
+            <strong>System Output</strong>
+            <span class="panel-state">Permit Mode</span>
+          </div>
+          <div class="plan-window" aria-label="Example permit workflow output">
+            <div>project: commercial tenant buildout</div>
+            <div>jurisdiction: Jackson, MS</div>
+            <div>status: ready_for_submission</div>
+            <div class="plan-grid">
+              <div class="plan-row">
+                <div class="plan-label">schematic</div>
+                <div class="plan-value">Sanitary, vent, and water distribution layout generated from source blueprint.</div>
+              </div>
+              <div class="plan-row">
+                <div class="plan-label">compliance</div>
+                <div class="plan-value">28-point ruleset evaluated against fixture counts, layout logic, and permit packaging requirements.</div>
+              </div>
+              <div class="plan-row">
+                <div class="plan-label">export</div>
+                <div class="plan-value">Permit package bundle prepared with plan sheets, schedules, and review artifacts.</div>
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <section class="section" id="about">
+    <section class="stats-bar" aria-label="Key statistics">
       <div class="container">
-        <h2 class="section-title">How It Works</h2>
-        <p class="section-intro">Jackson Plumbing Plan AI is designed for fast evaluation of residential and commercial floor plans, with internal model processing and email-based delivery.</p>
-        <div class="steps">
-          <article class="step">
+        <div class="stats-grid">
+          <div class="stat-card" data-reveal>
+            <strong>28 Compliance Checks</strong>
+            <span>Structured review across layout, fixture counts, and package completeness.</span>
+          </div>
+          <div class="stat-card" data-reveal>
+            <strong>100% Pass Rate</strong>
+            <span>Built to target approval-ready outputs in the supported market workflow.</span>
+          </div>
+          <div class="stat-card" data-reveal>
+            <strong>10x Faster than Manual</strong>
+            <span>Compresses hours of drafting and packaging into a guided automated flow.</span>
+          </div>
+          <div class="stat-card" data-reveal>
+            <strong>Jackson, MS Coverage</strong>
+            <span>Purpose-built around the local permit package context for licensed contractors.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head center" data-reveal>
+          <span class="eyebrow">Features</span>
+          <h2>Automation that fits real permit workflows.</h2>
+          <p>
+            Every output is designed around the deliverables plumbing contractors need to move from blueprint to submittal with less rework and more confidence.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card" data-reveal>
+            <div class="feature-icon">01</div>
+            <h3>Auto-Schematic Generation</h3>
+            <p>Converts source drawings into organized plumbing schematics with the speed and structure needed for submission-ready plan development.</p>
+            <ul>
+              <li>Rapid plan interpretation from uploaded blueprint inputs</li>
+              <li>Clean sanitary, vent, and supply layout generation</li>
+              <li>Consistent output format for downstream review</li>
+            </ul>
+          </article>
+
+          <article class="feature-card" data-reveal>
+            <div class="feature-icon">02</div>
+            <h3>Code Compliance Check (28-point)</h3>
+            <p>Runs a targeted compliance pass so common issues are surfaced before a contractor submits a package for approval.</p>
+            <ul>
+              <li>Fixture logic, routing sanity checks, and packaging review</li>
+              <li>Repeatable standards instead of ad hoc manual review</li>
+              <li>Clear signal on approval-readiness before export</li>
+            </ul>
+          </article>
+
+          <article class="feature-card" data-reveal>
+            <div class="feature-icon">03</div>
+            <h3>Permit Package Export</h3>
+            <p>Bundles the relevant plan outputs and supporting documentation into a single handoff package aligned to permit submission needs.</p>
+            <ul>
+              <li>Submission-friendly output package generation</li>
+              <li>Reduced administrative time for contractors and teams</li>
+              <li>Organized deliverables for internal and external review</li>
+            </ul>
+          </article>
+
+          <article class="feature-card" data-reveal>
+            <div class="feature-icon">04</div>
+            <h3>WSFU + Fixture Scheduling</h3>
+            <p>Builds scheduling logic into the system so fixture counts and water supply demand planning stay connected to the final plan output.</p>
+            <ul>
+              <li>Fixture schedules tied directly to generated plans</li>
+              <li>WSFU calculations embedded into the workflow</li>
+              <li>Less spreadsheet drift and fewer coordination errors</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="container">
+        <div class="section-head center" data-reveal>
+          <span class="eyebrow">How It Works</span>
+          <h2>Three steps from drawing to permit package.</h2>
+          <p>
+            The system is designed to remove bottlenecks without forcing contractors to change the way they already organize jobs and submissions.
+          </p>
+        </div>
+
+        <div class="workflow">
+          <article class="step" data-reveal>
             <div class="step-number">1</div>
-            <h3>Step 1 — Upload</h3>
-            <p>Submit your floor plan PDF or image through our secure demo request form.</p>
+            <h3>Upload Blueprint</h3>
+            <p>Start with the project drawing set or blueprint source used for plan preparation.</p>
           </article>
-          <article class="step">
+          <article class="step" data-reveal>
             <div class="step-number">2</div>
-            <h3>Step 2 — AI Processing</h3>
-            <p>Our proprietary TinyUNet model identifies fixture locations, applies probability-guided pipe routing, and generates WSFU (Water Supply Fixture Unit) schedules.</p>
+            <h3>AI Analyzes</h3>
+            <p>The system interprets the input, generates schematic outputs, and runs the compliance workflow.</p>
           </article>
-          <article class="step">
+          <article class="step" data-reveal>
             <div class="step-number">3</div>
-            <h3>Step 3 — Delivery</h3>
-            <p>Receive your annotated plan package via email, typically within 1 business day.</p>
+            <h3>Download Permit Package</h3>
+            <p>Receive organized deliverables for internal signoff and permit submission.</p>
           </article>
-        </div>
-        <div class="callout">
-          <p><strong>Powered by TinyUNet</strong> — a lightweight convolutional architecture trained on thousands of residential and commercial floor plans.</p>
-          <ul>
-            <li>Probability-guided pipe routing</li>
-            <li>WSFU scheduling per IPC/UPC standards</li>
-            <li>Fixture detection with &gt;90% accuracy</li>
-            <li>Hot/cold line differentiation</li>
-          </ul>
         </div>
       </div>
     </section>
 
-    <section class="section" id="request-demo">
+    <section class="section" id="use-case">
       <div class="container">
-        <h2 class="section-title">Request a Demo</h2>
-        <p class="section-intro">Share your project details and we will review the drawing type, confirm fit, and follow up by email.</p>
-        <div class="demo-card">
-          <form id="demo-form" action="mailto:harrison@clothollc.com" method="post" enctype="text/plain">
-            <div>
-              <label for="full-name">Full Name</label>
-              <input id="full-name" name="full-name" type="text" placeholder="Your full name" required>
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Use Case</span>
+          <h2>Built for licensed plumbing contractors in Mississippi.</h2>
+          <p>
+            Jackson Plumbing Plan AI is focused on contractors who need to prepare and submit permit packages efficiently, with outputs tailored to the practical constraints of real job flow.
+          </p>
+        </div>
+
+        <div class="use-case-panel">
+          <div class="use-case-copy" data-reveal>
+            <p>
+              The product is especially useful when teams need to reduce turnaround time between receiving a drawing and delivering a clean permit package. Instead of drafting every component manually, contractors get a faster path to a reviewable deliverable.
+            </p>
+            <p>
+              This helps on both straightforward jobs and repeated submission patterns where consistency matters as much as speed. The system is designed to support professionals who are accountable for the final package and want stronger process control before filing.
+            </p>
+            <p>
+              It is not a generic drafting tool. It is a targeted AI workflow for permit packages in a specific regulated market.
+            </p>
+          </div>
+
+          <aside class="use-case-box" data-reveal>
+            <div class="check-row">
+              <strong>Who it serves</strong>
+              <span>Licensed plumbing contractors and permit prep teams operating in Mississippi.</span>
             </div>
-            <div>
-              <label for="email">Email Address</label>
-              <input id="email" name="email" type="email" placeholder="you@company.com" required>
+            <div class="check-row">
+              <strong>Where it helps most</strong>
+              <span>High-volume or time-sensitive submittals that cannot absorb slow manual drafting cycles.</span>
             </div>
-            <div>
-              <label for="company">Company Name</label>
-              <input id="company" name="company" type="text" placeholder="Company name" required>
+            <div class="check-row">
+              <strong>What it replaces</strong>
+              <span>Fragmented plan prep, repetitive compliance checks, and disconnected schedule handoffs.</span>
             </div>
-            <div>
-              <label for="project-description">Project Description</label>
-              <textarea id="project-description" name="project-description" placeholder="Tell us about the project type, occupancy, and scope." required></textarea>
-            </div>
-            <button class="button submit-button" type="submit">Request Demo</button>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="join-beta">
+      <div class="container">
+        <div class="cta-panel" data-reveal>
+          <div>
+            <span class="eyebrow">Beta Access</span>
+            <h2>Join the Beta</h2>
+            <p>
+              Request early access to Jackson Plumbing Plan AI and see how automated permit packaging can reduce drafting time for your team.
+            </p>
+          </div>
+          <form class="cta-form" action="#" method="post">
+            <label for="beta-email">Work email</label>
+            <input id="beta-email" name="email" type="email" placeholder="contractor@company.com">
+            <button class="button button-primary" type="submit">Request Beta Access</button>
+            <div class="cta-disclaimer">No backend is connected yet. This field is styled and ready to be wired into your preferred intake flow.</div>
           </form>
-          <div class="success-message" id="form-success">✅ Thank you! We'll review your project and follow up within 1 business day.</div>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container">
-      <p>© 2025 Clotho LLC d/b/a Jackson Plumbing Plan AI. A Clotho Holdings product. | <a href="./privacy.html">Privacy Policy</a></p>
-      <small>Operated by Clotho LLC, a Texas limited liability company. Not affiliated with any plumbing contractor or licensing board.</small>
+    <div class="container footer-wrap">
+      <small>© <span id="year"></span> Jackson Plumbing Plan AI. Product messaging is provided for informational purposes only. Availability and workflow scope may vary during beta operation.</small>
+      <a href="privacy.html">Privacy Policy</a>
     </div>
   </footer>
 
   <script>
-    const navToggle = document.querySelector('.nav-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    const demoForm = document.getElementById('demo-form');
-    const successMessage = document.getElementById('form-success');
+    const navToggle = document.querySelector(".nav-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    const navAnchors = document.querySelectorAll(".nav-links a");
 
     if (navToggle && navLinks) {
-      navToggle.addEventListener('click', () => {
-        const isOpen = navLinks.classList.toggle('open');
-        navToggle.setAttribute('aria-expanded', String(isOpen));
+      navToggle.addEventListener("click", () => {
+        const expanded = navToggle.getAttribute("aria-expanded") === "true";
+        navToggle.setAttribute("aria-expanded", String(!expanded));
+        navLinks.classList.toggle("is-open");
       });
 
-      navLinks.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => {
-          navLinks.classList.remove('open');
-          navToggle.setAttribute('aria-expanded', 'false');
+      navAnchors.forEach((link) => {
+        link.addEventListener("click", () => {
+          navToggle.setAttribute("aria-expanded", "false");
+          navLinks.classList.remove("is-open");
         });
       });
     }
 
-    if (demoForm && successMessage) {
-      demoForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        demoForm.style.display = 'none';
-        successMessage.classList.add('show');
+    const revealItems = document.querySelectorAll("[data-reveal]");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
       });
-    }
+    }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+
+    revealItems.forEach((item) => observer.observe(item));
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
